@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zink.bank.mappers.DenominationsMapper">
+
+    <update id="updateDenominations" parameterType="com.zink.bank.entity.Denominations">
+        UPDATE denominations d
+        SET d.count = #{count}
+        WHERE d.id = #{id}
+    </update>
+
+    <select id="findAllDenominations" resultType="com.zink.bank.entity.Denominations">
+        SELECT
+            id,
+            name,
+            value,
+            count,
+            deposit_limit as depositLimit,
+            disburse_limit as disburseLimit
+        FROM denominations
+        WHERE active = true
+    </select>
+
+</mapper>

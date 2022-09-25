@@ -1,0 +1,33 @@
+server:
+  port: 8081
+  servlet:
+    contextPath: /bank
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: atm-service
+  flyway:
+    validate-on-migrate: true
+    ignore-missing-migrations: false
+    sql-migration-prefix: V
+    sql-migration-suffixes: .sql
+    sql-migration-separator: _
+    enabled: true
+    url: jdbc:mysql://localhost:3306/atm_service
+    user: root
+    password: password
+    baseline-version: 1
+    baseline-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:mysql://localhost:3306/atm_service
+    username: root
+    password: password
+
+mybatis:
+  mapper-locations: classpath:./mappers/*.xml
+  type-aliases-package: com.zink.atm.models
