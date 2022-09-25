@@ -1,6 +1,7 @@
 .idea
 target/
 ${sys:log_path}/
+.DS_Store
 **/HELP.md
 **/mvnw
 **/mvnw.cmd
