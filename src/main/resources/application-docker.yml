@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: docker
+  flyway:
+    url: jdbc:mysql://mysqldb/bank?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    user: root
+    password: root
+  datasource:
+    url: jdbc:mysql://mysqldb/bank?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: root
+    password: root

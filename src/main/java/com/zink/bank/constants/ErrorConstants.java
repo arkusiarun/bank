@@ -15,4 +15,6 @@ public class ErrorConstants {
 
     public static final String INSUFFICIENT_BALANCE = "Insufficient Balance";
 
+    public static final String INVALID_PARAMS = "Invalid Params for :";
+
 }

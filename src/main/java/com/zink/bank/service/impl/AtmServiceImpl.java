@@ -28,16 +28,16 @@ public class AtmServiceImpl implements AtmService {
 
     @Override
     public TransactionResponse doTransaction(TransactionRequest transactionRequest) {
+        CommonUtils.validateTransaction(transactionRequest);
         return TransactionFactory.getParser(transactionRequest.getTransactionType())
                 .doTransaction(transactionRequest);
     }
 
     @Override
     public void addDenominations(Denominations denominations) {
-        Map<Integer, Integer> map = new HashMap<>();
         List<com.zink.bank.entity.Denominations> denominationsList = CommonUtils.denominationHandling(
                 denominations, this.denominationsMapper.findAllDenominations());
-        for(com.zink.bank.entity.Denominations denominations1: denominationsList) {
+        for (com.zink.bank.entity.Denominations denominations1 : denominationsList) {
             this.denominationsMapper.updateDenominations(denominations1);
         }
     }

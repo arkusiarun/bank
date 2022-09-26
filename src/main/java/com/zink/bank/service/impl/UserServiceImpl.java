@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     public CreateAccountResponse createAccount(CreateAccountRequest createAccountRequest) {
         log.info("Creating Account for Request: {}", createAccountRequest);
         Integer customerId = this.userMapper.selectUser(createAccountRequest.getCustomerId());
-        if(customerId == null) {
+        if(customerId == 0) {
             throw new ApplicationException(ErrorConstants.CUSTOMER_NOT_FOUND);
         }
         Account account = new Account();

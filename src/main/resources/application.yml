@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8087
   servlet:
     contextPath: /bank
 
@@ -15,7 +15,7 @@ spring:
     sql-migration-suffixes: .sql
     sql-migration-separator: _
     enabled: true
-    url: jdbc:mysql://localhost:3306/atm_service
+    url: jdbc:mysql://localhost:3306/bank?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     user: root
     password: password
     baseline-version: 1
@@ -24,9 +24,10 @@ spring:
     hibernate:
       ddl-auto: validate
   datasource:
-    url: jdbc:mysql://localhost:3306/atm_service
+    url: jdbc:mysql://localhost:3306/bank?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
     username: root
     password: password
+    platform: mysql
 
 mybatis:
   mapper-locations: classpath:./mappers/*.xml

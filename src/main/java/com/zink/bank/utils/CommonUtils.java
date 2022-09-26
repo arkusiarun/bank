@@ -1,6 +1,7 @@
 package com.zink.bank.utils;
 
 import com.google.gson.Gson;
+import com.zink.bank.constants.ErrorConstants;
 import com.zink.bank.dto.Denominations;
 import com.zink.bank.dto.TransactionRequest;
 import com.zink.bank.dto.TransactionResponse;
@@ -8,6 +9,7 @@ import com.zink.bank.entity.Transaction;
 import com.zink.bank.enums.DenominationsEnum;
 import com.zink.bank.enums.TransactionStatus;
 import com.zink.bank.enums.TransactionType;
+import com.zink.bank.exception.ApplicationException;
 
 import java.sql.Date;
 import java.util.List;
@@ -68,7 +70,7 @@ public class CommonUtils {
     public static TransactionResponse getTransactionResponse(TransactionRequest transactionRequest, Double balance) {
         TransactionResponse transactionResponse = new TransactionResponse();
         transactionResponse.setTransactionId(generateTransactionId());
-        if(!TransactionType.BALANCE_CHECK.equals(transactionRequest.getTransactionType())) {
+        if (!TransactionType.BALANCE_CHECK.equals(transactionRequest.getTransactionType())) {
             transactionResponse.setTransactionAmount(
                     transactionRequest.getTransactionAmount());
         }
@@ -108,5 +110,27 @@ public class CommonUtils {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
         return Integer.valueOf(String.format("%06d", number));
+    }
+
+    public static void validateTransaction(TransactionRequest transactionRequest) {
+        switch (transactionRequest.getTransactionType()) {
+            case CASH_DEPOSIT:
+                if (transactionRequest.getTransactionAmount() <= 0 && transactionRequest.getDenominations() == null) {
+                    throw new ApplicationException(ErrorConstants.INVALID_PARAMS + transactionRequest.getTransactionType());
+                }
+                break;
+            case CASH_WITHDRAWAL:
+                if (transactionRequest.getTransactionAmount() <= 0) {
+                    throw new ApplicationException(ErrorConstants.INVALID_PARAMS + transactionRequest.getTransactionType());
+                }
+                break;
+            case BALANCE_CHECK:
+                if (transactionRequest.getTransactionAmount() != 0) {
+                    throw new ApplicationException(ErrorConstants.INVALID_PARAMS + transactionRequest.getTransactionType());
+                }
+                break;
+            default:
+                throw new ApplicationException(ErrorConstants.INVALID_TRANSACTION_TYPE);
+        }
     }
 }
